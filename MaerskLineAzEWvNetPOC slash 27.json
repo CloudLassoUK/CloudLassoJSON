@@ -132,7 +132,7 @@
                         }
                     },
                     {
-                        "name": "DTL-Subnet-01",
+                        "name": "Wren-Subnet-01",
                         "properties": {
                             "addressPrefix": "10.15.92.32/27",
                             "networkSecurityGroup": {
@@ -141,7 +141,7 @@
                         }
                     },
                     {
-                        "name": "DTL-Subnet-02",
+                        "name": "Wren-Subnet-02",
                         "properties": {
                             "addressPrefix": "10.15.92.64/27",
                             "networkSecurityGroup": {
@@ -150,7 +150,7 @@
                         }
                     },
                     {
-                        "name": "DTL-Subnet-03",
+                        "name": "Wren-Subnet-03",
                         "properties": {
                             "addressPrefix": "10.15.92.96/27",
                             "networkSecurityGroup": {
@@ -159,7 +159,7 @@
                         }
                     },
                     {
-                        "name": "DTL-Subnet-04",
+                        "name": "Wren-Subnet-04",
                         "properties": {
                             "addressPrefix": "10.15.92.128/27",
                             "networkSecurityGroup": {
