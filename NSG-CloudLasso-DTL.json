@@ -72,7 +72,7 @@
                         }
                     },
                     {
-                        "name": "IBA-RDP-Maersknet",
+                        "name": "IBA-RDP-OnPrem",
                         "properties": {
                             "protocol": "Tcp",
                             "sourcePortRange": "*",
@@ -85,7 +85,7 @@
                         }
                     },
                     {
-                        "name": "IBA-Telnet-MaerskNet",
+                        "name": "IBA-Telnet-OnPrem",
                         "properties": {
                             "protocol": "Tcp",
                             "sourcePortRange": "*",
