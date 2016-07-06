@@ -3,18 +3,18 @@
     "contentVersion": "2.0.0.0",
     "parameters": {
         "networkSecurityGroups_NSG_Default_DTL_PoC_name": {
-            "defaultValue": "NSG-Default-DTL-PoC",
+            "defaultValue": "NSG-CloudLasso-DTL",
             "type": "String"
         },
         "virtualNetworks_MaerskLineAzEWvNetPOC_name": {
-            "defaultValue": "MaerskLineAzEWvNetPOC",
+            "defaultValue": "vNet-CloudLasso-DTL",
             "type": "String"
         }
     },
     "variables": {},
     "resources": [
         {
-            "comments": "Generalized from resource: '/subscriptions/82cec58d-d1c3-4689-af03-435857568c99/resourceGroups/Default-Networking/providers/Microsoft.Network/networkSecurityGroups/NSG-Default-DTL-PoC'.",
+            "comments": "Converted from Maersknet",
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name')]",
             "apiVersion": "2016-03-30",
