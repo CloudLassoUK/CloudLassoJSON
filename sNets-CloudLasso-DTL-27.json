@@ -6,7 +6,7 @@
             "defaultValue": "NSG-CloudLasso-DTL",
             "type": "String"
         },
-        "virtualNetworks_MaerskLineAzEWvNetPOC_name": {
+        "virtualNetworks_vNet-CloudLasso-DTL_name": {
             "defaultValue": "vNet-CloudLasso-DTL",
             "type": "String"
         }
@@ -76,7 +76,7 @@
                         }
                     },
                     {
-                        "name": "IBA-RDP-Maersknet",
+                        "name": "IBA-RDP-CloudLasso",
                         "properties": {
                             "protocol": "Tcp",
                             "sourcePortRange": "*",
@@ -89,7 +89,7 @@
                         }
                     },
                     {
-                        "name": "IBA-Telnet-MaerskNet",
+                        "name": "IBA-Telnet-CLoudLasso",
                         "properties": {
                             "protocol": "Tcp",
                             "sourcePortRange": "*",
@@ -109,7 +109,7 @@
         {
             "comments": "Converted to CloudLasso",
             "type": "Microsoft.Network/virtualNetworks",
-            "name": "[parameters('virtualNetworks_MaerskLineAzEWvNetPOC_name')]",
+            "name": "[parameters('virtualNetworks_vNet-CloudLasso-DTL_name')]",
             "apiVersion": "2016-03-30",
             "location": "westeurope",
             "properties": {
