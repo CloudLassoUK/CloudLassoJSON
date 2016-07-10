@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetworks_vNet_CloudLasso_DTL_4tier_name": {
+            "defaultValue": "vNet-CloudLasso-DTL-4tier",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Creates a vNet with the following 5 subnets:  CloudAccess Layer, Web, App, Data, and Management.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_vNet_CloudLasso_DTL_4tier_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "westeurope",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "192.168.1.0/24"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "Cloud-Access-Layer",
+                        "properties": {
+                            "addressPrefix": "192.168.1.0/27"
+                        }
+                    },
+                    {
+                        "name": "Web-Tier",
+                        "properties": {
+                            "addressPrefix": "192.168.1.64/27"
+                        }
+                    },
+                    {
+                        "name": "App-Tier",
+                        "properties": {
+                            "addressPrefix": "192.168.1.128/27"
+                        }
+                    },
+                    {
+                        "name": "Data-Tier",
+                        "properties": {
+                            "addressPrefix": "192.168.1.192/27"
+                        }
+                    },
+                    {
+                        "name": "Mangement-Tier",
+                        "properties": {
+                            "addressPrefix": "192.168.1.224/27"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        }
+    ]
+}

@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetworks_vNet_CloudLasso_DTL_4tier_name": {
+            "defaultValue": "vNet-CloudLasso-DTL-4tier",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "WorkingTitle - Large Network, many subnets",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_vNet_CloudLasso_DTL_4tier_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "westeurope",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.20.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "sNet-CloudLasso-001",
+                        "properties": {
+                            "addressPrefix": "10.20.1.0/24"
+                        }
+                    },
+                    
+                      {
+                        "name": "sNet-CloudLasso-002",
+                        "properties": {
+                            "addressPrefix": "10.20.2.0/24"
+                        }
+                    },
+                      {
+                        "name": "sNet-CloudLasso-003",
+                        "properties": {
+                            "addressPrefix": "10.20.3.0/24"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        }
+    ]
+}

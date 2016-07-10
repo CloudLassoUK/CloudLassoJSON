@@ -1,0 +1,366 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "2.0.0.0",
+    "parameters": {
+        "networkSecurityGroups_NSG_Default_DTL_PoC_name": {
+            "defaultValue": "NSG-CloudLasso-DTL",
+            "type": "String"
+        },
+        "virtualNetworks_vNet-CloudLasso-DTL_name": {
+            "defaultValue": "vNet-CloudLasso-DTL",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "westeurope",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "IBD-Block-All",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 4096,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "IBA-Allow-DTL-Comms",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "10.15.92.0/23",
+                            "destinationAddressPrefix": "10.15.92.0/23",
+                            "access": "Allow",
+                            "priority": 4095,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "OBD-Block-All",
+                        "properties": {
+                            "description": "",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 4096,
+                            "direction": "Outbound"
+                        }
+                    },
+                    {
+                        "name": "OBA-Allow-DTL-Comm",
+                        "properties": {
+                            "description": "",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "10.15.92.0/23",
+                            "destinationAddressPrefix": "10.15.92.0/23",
+                            "access": "Allow",
+                            "priority": 4095,
+                            "direction": "Outbound"
+                        }
+                    },
+                    {
+                        "name": "IBA-RDP-CloudLasso",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 4090,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "IBA-Telnet-CloudLasso",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 4080,
+                            "direction": "Inbound"
+                        }
+                    }
+
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/82cec58d-d1c3-4689-af03-435857568c99/resourceGroups/Default-Networking/providers/Microsoft.Network/virtualNetworks/vNet-CloudLasso-DTL'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_vNet-CloudLasso-DTL_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "westeurope",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.15.92.0/23"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "iDMZ-Subnet-01",
+                        "properties": {
+                            "addressPrefix": "10.15.92.16/28"
+                        }
+                    },
+                       {
+                        "name": "eDMZ-Subnet-01",
+                        "properties": {
+                            "addressPrefix": "10.15.93.224/28"
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-01",
+                        "properties": {
+                            "addressPrefix": "10.15.92.32/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-02",
+                        "properties": {
+                            "addressPrefix": "10.15.92.48/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-03",
+                        "properties": {
+                            "addressPrefix": "10.15.92.64/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-04",
+                        "properties": {
+                            "addressPrefix": "10.15.92.80/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-05",
+                        "properties": {
+                            "addressPrefix": "10.15.92.96/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },{
+                        "name": "DTL-Subnet-06",
+                        "properties": {
+                            "addressPrefix": "10.15.92.112/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },{
+                        "name": "DTL-Subnet-07",
+                        "properties": {
+                            "addressPrefix": "10.15.92.128/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },{
+                        "name": "DTL-Subnet-08",
+                        "properties": {
+                            "addressPrefix": "10.15.92.144/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },{
+                        "name": "DTL-Subnet-09",
+                        "properties": {
+                            "addressPrefix": "10.15.92.160/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },{
+                        "name": "DTL-Subnet-10",
+                        "properties": {
+                            "addressPrefix": "10.15.92.176/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },{
+                        "name": "DTL-Subnet-11",
+                        "properties": {
+                            "addressPrefix": "10.15.92.192/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },{
+                        "name": "DTL-Subnet-12",
+                        "properties": {
+                            "addressPrefix": "10.15.92.208/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },{
+                        "name": "DTL-Subnet-13",
+                        "properties": {
+                            "addressPrefix": "10.15.93.0/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },{
+                        "name": "DTL-Subnet-14",
+                        "properties": {
+                            "addressPrefix": "10.15.93.16/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-15",
+                        "properties": {
+                            "addressPrefix": "10.15.93.32/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-16",
+                        "properties": {
+                            "addressPrefix": "10.15.93.48/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-17",
+                        "properties": {
+                            "addressPrefix": "10.15.93.64/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-18",
+                        "properties": {
+                            "addressPrefix": "10.15.93.80/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-19",
+                        "properties": {
+                            "addressPrefix": "10.15.93.96/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-20",
+                        "properties": {
+                            "addressPrefix": "10.15.93.112/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-21",
+                        "properties": {
+                            "addressPrefix": "10.15.93.128/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-22",
+                        "properties": {
+                            "addressPrefix": "10.15.93.144/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-23",
+                        "properties": {
+                            "addressPrefix": "10.15.93.160/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-24",
+                        "properties": {
+                            "addressPrefix": "10.15.93.176/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-25",
+                        "properties": {
+                            "addressPrefix": "10.15.93.192/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DTL-Subnet-26",
+                        "properties": {
+                            "addressPrefix": "10.15.93.208/28",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_Default_DTL_PoC_name'))]"
+                            }
+                        }
+                    }
+                 
+                  
+                ]
+            },
+            "dependsOn": []
+        }
+    ]
+}
