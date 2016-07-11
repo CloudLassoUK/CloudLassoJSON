@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetworks_vNet_CloudLasso_DTL_name": {
+            "defaultValue": "vNet-CloudLasso-DTL-WE",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/f9aaee78-afb6-48fe-985a-90f1b4cbeef4/resourceGroups/CloudLassoDTL/providers/Microsoft.Network/virtualNetworks/vNet-CloudLasso-DTL'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_vNet_CloudLasso_DTL_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "westeurope",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.15.64.0/19"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "init",
+                        "properties": {
+                            "addressPrefix": "10.15.92.0/23"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        }
+    ]
+}
